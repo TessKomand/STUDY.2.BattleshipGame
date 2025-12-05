@@ -42,14 +42,14 @@
 
         static int Sonar(int[,] mapa,int x, int y) {
             int[,] mapa2 = new int[12, 12];
-            for (int i = 0; i < 9; i++) {
-                for (int j = 0; j < 9; j++) {
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
                     mapa2[i + 1, j + 1] = mapa[i, j];
                 }
             }
             x++;
             y++;
-            if (mapa2[x+1,y] == 1 || mapa2[x - 1, y] == 1 && mapa2[x, y+1] == 1 || mapa2[x, y + 1] == 1) {
+            if (mapa2[x+1,y] == 1 || mapa2[x - 1, y] == 1 || mapa2[x, y+1] == 1 || mapa2[x, y - 1] == 1) {
                 Console.WriteLine("Statek jest blisko");
                 return 1;
             } else {
