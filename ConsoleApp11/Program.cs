@@ -6,7 +6,7 @@
             int pozycjax;
             int pozycjay;
             int strzaly = 0;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
                 pozycjax = rnd.Next(0, 10);
                 pozycjay = rnd.Next(0, 10);
                 if (mapa[pozycjax, pozycjay] == 0) {
@@ -14,26 +14,47 @@
                 } else {
                     i--;
                 }
-                Console.WriteLine("Witaj w grze w statki, grasz na mapie 10 na 10, musisz zestrzelić 5 statków. Podaj swoje miejsce strzelania, masz 10 strzałów. podawaj miejsce jako x y");
-                do {
-                    string[] misjece = Console.ReadLine().Split(' ');
-                    int x = Convert.ToInt32(misjece[0])-1;
-                    int y = Convert.ToInt32(misjece[1])-1;
-                    if (x < 0 || x > 9 || y < 0 || y > 9) {
-                        Console.WriteLine("Podano złe współrzędne, podaj jeszcze raz");
-                        continue;
-                    }
-                    if (mapa[x, y] == 1) {
-                        Console.WriteLine("Trafiony zatopiony!");
-                        mapa[x, y] = 0;
-                    } else {
-                        Console.WriteLine("Pudło!");
-                    }
-                    strzaly++;
-                } while (strzaly<=10);
-
-
             }
+            Console.WriteLine("Witaj w grze w statki, grasz na mapie 10 na 10, musisz zestrzelić 5 statków. Podaj swoje miejsce strzelania, masz 10 strzałów. podawaj miejsce jako x y");
+            do {
+                string[] misjece = Console.ReadLine().Split(' ');
+                int x = Convert.ToInt32(misjece[0]) - 1;
+                int y = Convert.ToInt32(misjece[1]) - 1;
+                if (x < 0 || x > 9 || y < 0 || y > 9) {
+                    Console.WriteLine("Podano złe współrzędne, podaj jeszcze raz");
+                    continue;
+                }
+                if (mapa[x, y] == 1) {
+                    Console.WriteLine("Trafiony zatopiony!");
+                    mapa[x, y] = 0;
+                } else {
+                    Console.WriteLine("Pudło!");
+                }
+                strzaly++;
+                Sonar(mapa,x, y);
+
+            } while (strzaly <= 20);
+
+
+
         }
+
+
+        static int Sonar(int[,] mapa,int x, int y) {
+            int[,] mapa2 = new int[12, 12];
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    mapa2[i + 1, j + 1] = mapa[i, j];
+                }
+            }
+            x++;
+            y++;
+            if (mapa2[x+1,y] == 1 || mapa2[x - 1, y] == 1 && mapa2[x, y+1] == 1 || mapa2[x, y + 1] == 1) {
+                Console.WriteLine("Statek jest blisko");
+                return 1;
+            } else {
+                Console.WriteLine("Statek jest daleko");
+                return 0;
+            }
     }
-}
+}}
