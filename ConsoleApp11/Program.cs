@@ -6,6 +6,7 @@
             int pozycjax;
             int pozycjay;
             int strzaly = 0;
+            int wynik = 0;
             for (int i = 0; i < 10; i++) {
                 pozycjax = rnd.Next(0, 10);
                 pozycjay = rnd.Next(0, 10);
@@ -27,20 +28,20 @@
                 if (mapa[x, y] == 1) {
                     Console.WriteLine("Trafiony zatopiony!");
                     mapa[x, y] = 0;
+                    wynik++;
                 } else {
                     Console.WriteLine("Pudło!");
                 }
                 strzaly++;
                 Sonar(mapa,x, y);
-
             } while (strzaly <= 20);
-
+            Koniec(wynik);
 
 
         }
 
 
-        static int Sonar(int[,] mapa,int x, int y) {
+        static int Sonar(int[,] mapa, int x, int y) {
             int[,] mapa2 = new int[12, 12];
             for (int i = 0; i < 10; i++) {
                 for (int j = 0; j < 10; j++) {
@@ -49,12 +50,26 @@
             }
             x++;
             y++;
-            if (mapa2[x+1,y] == 1 || mapa2[x - 1, y] == 1 || mapa2[x, y+1] == 1 || mapa2[x, y - 1] == 1) {
+            if (mapa2[x + 1, y] == 1 || mapa2[x - 1, y] == 1 || mapa2[x, y + 1] == 1 || mapa2[x, y - 1] == 1) {
                 Console.WriteLine("Statek jest blisko");
                 return 1;
             } else {
                 Console.WriteLine("Statek jest daleko");
                 return 0;
             }
+        }
+        static int Koniec(int wynik) {
+            if (wynik == 10) {
+                Console.WriteLine("Totalna wygrana");
+            } else if (wynik == 7) {
+                Console.WriteLine("Wygrana");
+            } else if (wynik == 4) {
+                Console.WriteLine("Wygrana, z dużymi stratami");
+            } else {
+                Console.WriteLine("Przegrana");
+            }
+            Console.WriteLine("Wynik: "+wynik);
+            return 0;
+        }
     }
-}}
+}
